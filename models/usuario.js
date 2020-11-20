@@ -27,6 +27,14 @@ module.exports = function(sequelize, DataTypes) {
     contrasenia_usuario: {
       type: DataTypes.STRING(40),
       allowNull: false
+    },
+    operacion:{
+      type:DataTypes.STRING(40),
+      allowNull: false
+    },
+    multiplo:{
+      type: DataTypes.INTEGER,
+      allowNull: false,
     }
   }, {
     sequelize,
