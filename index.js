@@ -1,6 +1,6 @@
 const express = require('express');
+require("dotenv").config();
 const bodyParser = require('body-parser');
-
 const apiRouter = require('./routes/api');
 
 const app = express();
@@ -12,6 +12,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api', apiRouter);
 
-app.listen(3000, () =>{
+app.listen(3030, () =>{
     console.log('Server runing');
 });
