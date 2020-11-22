@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { check } = require('express-validator');
 const { validarCampos } = require('../../middlewares/validar-campos');
-
+const { validatJWT } = require('../../middlewares/validar-jwt');
 const { generarJWT } = require('../../helpers/jwt');
 
 const { User } = require('../../db');
@@ -50,6 +50,18 @@ router.post('/login',
         
 });
 
+router.get('/renew', validatJWT , async (req,res)=>{
+    const { id, name } = req;
+    let usuario = await  User.findOne( { where: { cedula: id } } );
+    const token = await generarJWT( usuario.cedula, usuario.nombre_usuario );
+
+    res.json({
+        ok: true,
+        id,
+        name,
+        token
+    })
+});
 
 router.post('/', async (req, res) => {
     const userC = await User.create(req.body);
