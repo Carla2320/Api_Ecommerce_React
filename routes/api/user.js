@@ -3,7 +3,7 @@ const { check ,validationResult} = require('express-validator');
 const { validarCampos } = require('../../middlewares/validar-campos');
 const { validatJWT } = require('../../middlewares/validar-jwt');
 const { generarJWT } = require('../../helpers/jwt');
-const bcrypt= require("bcryptjs")
+const bcrypt = require("bcryptjs")
 
 const { User } = require('../../db');
 
@@ -15,13 +15,14 @@ router.get('/',async (req,res)=>{
         next(err);
   }
 })
-router.post('/registrar',[check('cedula','La cedula es obligatoria').not().isEmpty(),
-check('id_rol','El id es obligatoria').not().isEmpty(),
-check('nombre_usuario','La cedula es obligatoria').not().isEmpty(),
-check('apellido_usuario','El  Apellido es obligatoria').not().isEmpty(),
-check('contrasenia_usuario','La contraseña es obligatoria').not().isEmpty(),
-check('operacion','La operacion obligatoria').not().isEmpty(),
-check('multiplo','El multiplo es obligatoria').not().isEmpty()
+router.post('/registrar',[
+    check('cedula','La cedula es obligatoria').not().isEmpty(),
+    check('id_rol','El id es obligatoria').not().isEmpty(),
+    check('nombre_usuario','La cedula es obligatoria').not().isEmpty(),
+    check('apellido_usuario','El  Apellido es obligatoria').not().isEmpty(),
+    check('contrasenia_usuario','La contraseña es obligatoria').not().isEmpty(),
+    check('operacion','La operacion obligatoria').not().isEmpty(),
+    check('multiplo','El multiplo es obligatoria').not().isEmpty()
 ],async (req,res)=>{
     const errores=validationResult(req);
     if(!errores.isEmpty()){
@@ -40,7 +41,6 @@ router.post('/login',
     ],
     async (req, res) => {
         const { cedula, contrasenia_usuario } = req.body;
-
         try {
             let usuario = await  User.findOne( { where: { cedula: cedula } } );
             if ( !usuario ){
@@ -49,8 +49,8 @@ router.post('/login',
                     msg: 'No existe usuario con esa cedula'
                 });
             }
-
-            if (usuario.contrasenia_usuario != contrasenia_usuario){
+            const validPass = bcrypt.compareSync(contrasenia_usuario, usuario.contrasenia_usuario);
+            if ( !validPass ){
                 return res.status(400).json({
                     ok: false,
                     msg: 'Contraseña incorrecta'
