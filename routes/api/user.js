@@ -32,11 +32,11 @@ router.post('/login',
             }
             
             const token = await generarJWT( usuario.cedula, usuario.nombre_usuario );
-
             res.json({
                 ok:true,
                 name: usuario.nombre_usuario,
                 lastname: usuario.apellido_usuario,
+                number: usuario.multiplo, 
                 token
             })
 
