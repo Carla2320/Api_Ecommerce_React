@@ -32,7 +32,6 @@ check('multiplo','El multiplo es obligatoria').not().isEmpty()
     res.json(usuario)
 })
 
-
 router.post('/login', 
     [
         check('cedula','Se necesita la cedula').isNumeric(),
