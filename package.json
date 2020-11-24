@@ -4,17 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
-    "start": "node ."
-=======
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
->>>>>>> b78794a6631e7a97998986f520119f16f9b7d5a0
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",

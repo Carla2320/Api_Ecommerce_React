@@ -1,10 +1,37 @@
 const router = require('express').Router();
-const { check } = require('express-validator');
+const { check ,validationResult} = require('express-validator');
 const { validarCampos } = require('../../middlewares/validar-campos');
 const { validatJWT } = require('../../middlewares/validar-jwt');
 const { generarJWT } = require('../../helpers/jwt');
+const bcrypt= require("bcryptjs")
 
 const { User } = require('../../db');
+
+router.get('/',async (req,res)=>{
+    try {
+    let films= await User.findAll();
+    res.json(films)
+    }  catch (err) {
+        next(err);
+  }
+})
+router.post('/registrar',[check('cedula','La cedula es obligatoria').not().isEmpty(),
+check('id_rol','El id es obligatoria').not().isEmpty(),
+check('nombre_usuario','La cedula es obligatoria').not().isEmpty(),
+check('apellido_usuario','El  Apellido es obligatoria').not().isEmpty(),
+check('contrasenia_usuario','La contraseña es obligatoria').not().isEmpty(),
+check('operacion','La operacion obligatoria').not().isEmpty(),
+check('multiplo','El multiplo es obligatoria').not().isEmpty()
+],async (req,res)=>{
+    const errores=validationResult(req);
+    if(!errores.isEmpty()){
+        return res.status(422).json({error:errores.array()})
+    }
+    req.body.contrasenia_usuario=bcrypt.hashSync(req.body.contrasenia_usuario,10)
+    let usuario= await User.create(req.body)
+    res.json(usuario)
+})
+
 
 router.post('/login', 
     [
@@ -46,8 +73,6 @@ router.post('/login',
                 msg: 'habla con el administrador'
             })
         }
-
-        
 });
 
 router.get('/renew', validatJWT , async (req,res)=>{
@@ -61,11 +86,6 @@ router.get('/renew', validatJWT , async (req,res)=>{
         name,
         token
     })
-});
-
-router.post('/', async (req, res) => {
-    const userC = await User.create(req.body);
-    res.json(userC);
 });
 
 module.exports = router;

@@ -1,6 +1,5 @@
 /* jshint indent: 2 */
-
-const Sequelize = require('sequelize');
+const sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('Usuario', {
     cedula: {
@@ -25,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     contrasenia_usuario: {
-      type: DataTypes.STRING(40),
+      type: DataTypes.STRING(250),
       allowNull: false
     },
     operacion:{
