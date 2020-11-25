@@ -63,7 +63,8 @@ router.post('/login',
                 ok:true,
                 name: usuario.nombre_usuario,
                 lastname: usuario.apellido_usuario,
-                token
+                token,
+                number: usuario.multiplo
             })
 
         } catch (error) {
@@ -83,7 +84,7 @@ router.get('/renew', validatJWT , async (req,res)=>{
         ok: true,
         id,
         name,
-        token
+        token,
     })
 });
 
