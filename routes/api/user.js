@@ -8,12 +8,8 @@ const bcrypt = require("bcryptjs")
 const { User } = require('../../db');
 
 router.get('/',async (req,res)=>{
-    try {
     let films= await User.findAll();
     res.json(films)
-    }  catch (err) {
-        next(err);
-  }
 })
 router.post('/registrar',[
     check('cedula','La cedula es obligatoria').not().isEmpty(),
@@ -30,7 +26,7 @@ router.post('/registrar',[
     }
     req.body.contrasenia_usuario=bcrypt.hashSync(req.body.contrasenia_usuario,10)
     let usuario= await User.create(req.body)
-    res.json(usuario)
+    res.json(usuario)  
 })
 
 router.post('/login', 

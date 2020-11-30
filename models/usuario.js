@@ -23,9 +23,45 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(40),
       allowNull: false
     },
+    genero_usuario: {
+      type: DataTypes.STRING(60),
+      allowNull: false
+    },
+    username: {
+      type: DataTypes.STRING(40),
+      allowNull: false
+    },
     contrasenia_usuario: {
       type: DataTypes.STRING(250),
       allowNull: false
+    },
+    celular_usuario: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    telefono_usuario: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    email_usuario: {
+      type: DataTypes.STRING(80),
+      allowNull: false
+    },
+    direccion_principal: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
+    direccion_secundaria: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
+    provincia: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    codigo_postal: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     operacion:{
       type:DataTypes.STRING(40),
