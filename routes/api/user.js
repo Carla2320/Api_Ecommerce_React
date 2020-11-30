@@ -53,14 +53,15 @@ router.post('/login',
                 });
             }
             
-            const token = await generarJWT( usuario.cedula, usuario.nombre_usuario );
+            const token = await generarJWT( usuario.cedula, usuario.nombre_usuario,usuario.operacion);
 
             res.json({
                 ok:true,
                 name: usuario.nombre_usuario,
                 lastname: usuario.apellido_usuario,
                 token,
-                number: usuario.multiplo
+                number: usuario.multiplo,
+                operacion: usuario.operacion
             })
 
         } catch (error) {
