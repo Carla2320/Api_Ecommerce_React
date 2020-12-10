@@ -6,9 +6,15 @@ const { generarJWT } = require('../../helpers/jwt');
 const bcrypt = require("bcryptjs")
 
 const { User } = require('../../db');
+const { Product } = require('../../db');
 
 router.get('/',async (req,res)=>{
     let films= await User.findAll();
+    res.json(films)
+})
+
+router.get('/visualizarP',async (req,res)=>{
+    let films= await Product.findAll();
     res.json(films)
 })
 router.post('/registrar',[
@@ -29,8 +35,29 @@ router.post('/registrar',[
     res.json(usuario)  
 })
 
+router.post('/producto',[
+    check('id_producto','La cedula es obligatoria'),
+    check('id_categoria','El id es obligatoria').not().isEmpty(),
+    check('nombre_producto','La cedula es obligatoria').not().isEmpty(),
+    check('estado','El  Apellido es obligatoria').not().isEmpty(),
+    check('imagen','La contraseña es obligatoria').not().isEmpty(),
+    check('stock','La operacion obligatoria').not().isEmpty(),
+    check('precio','La operacion obligatoria').not().isEmpty(),
+    check('descripcion','El multiplo es obligatoria').not().isEmpty()
+],async (req,res)=>{
+    const errores=validationResult(req);
+    if(!errores.isEmpty()){
+        return res.status(422).json({error:errores.array()})
+    }
+    let producto= await Product.create(req.body)
+    res.json(producto)  
+    console.log(producto)
+  
+})
+
 router.post('/login', 
     [
+        
         check('cedula','Se necesita la cedula').isNumeric(),
         check('contrasenia_usuario','Se necesita la contraseña').isLength({ min: 6 }),
         validarCampos
