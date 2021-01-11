@@ -2,8 +2,8 @@
 
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('venta', {
-    id_venta: {
+  return sequelize.define('Compra', {
+    id_compra: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -28,10 +28,26 @@ module.exports = function(sequelize, DataTypes) {
         model: 'Usuario',
         key: 'cedula'
       }
+    },
+    id_detalle: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Detalle_venta',
+        key: 'id_detalle'
+      }
+    },
+    numero: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Tarjeta',
+        key: 'numero'
+      }
     }
   }, {
     sequelize,
-    tableName: 'venta',
+    tableName: 'Compra',
     timestamps: false,
     indexes: [
       {
@@ -39,7 +55,14 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "id_venta" },
+          { name: "id_compra" },
+        ]
+      },
+      {
+        name: "detalle_venta_venta_fk",
+        using: "BTREE",
+        fields: [
+          { name: "id_detalle" },
         ]
       },
       {
@@ -47,6 +70,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "cedula" },
+        ]
+      },
+      {
+        name: "tarjeta_venta_fk",
+        using: "BTREE",
+        fields: [
+          { name: "numero" },
         ]
       },
     ]
