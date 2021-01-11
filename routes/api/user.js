@@ -51,7 +51,6 @@ router.post('/producto',[
     }
     let producto= await Product.create(req.body)
     res.json(producto)  
-    console.log(producto)
   
 })
 
