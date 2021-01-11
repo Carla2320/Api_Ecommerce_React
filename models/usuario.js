@@ -1,5 +1,6 @@
 /* jshint indent: 2 */
-const sequelize = require('sequelize');
+
+const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('Usuario', {
     cedula: {
@@ -24,7 +25,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     genero_usuario: {
-      type: DataTypes.STRING(60),
+      type: DataTypes.STRING(30),
       allowNull: false
     },
     username: {
@@ -37,14 +38,14 @@ module.exports = function(sequelize, DataTypes) {
     },
     celular_usuario: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: false
     },
     telefono_usuario: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: false
     },
     email_usuario: {
-      type: DataTypes.STRING(80),
+      type: DataTypes.STRING(20),
       allowNull: false
     },
     direccion_principal: {
@@ -56,20 +57,20 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     provincia: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(20),
       allowNull: false
     },
     codigo_postal: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: false
     },
-    operacion:{
-      type:DataTypes.STRING(40),
+    operacion: {
+      type: DataTypes.STRING(30),
       allowNull: false
     },
     multiplo: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: false
     }
   }, {
     sequelize,

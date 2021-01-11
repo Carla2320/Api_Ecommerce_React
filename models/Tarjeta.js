@@ -2,32 +2,35 @@
 
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Detalle_venta', {
-    id_detalle: {
-      autoIncrement: true,
+  return sequelize.define('Tarjeta', {
+    numero: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    cantidad: {
+    tipo: {
+      type: DataTypes.STRING(30),
+      allowNull: false
+    },
+    fecha_vencimiento: {
+      type: DataTypes.DATEONLY,
+      allowNull: false
+    },
+    codigo_seguridad: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    precio: {
-      type: DataTypes.DECIMAL(11,2),
-      allowNull: false
-    },
-    id_producto: {
+    cedula: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Producto',
-        key: 'id_producto'
+        model: 'Usuario',
+        key: 'cedula'
       }
     }
   }, {
     sequelize,
-    tableName: 'Detalle_venta',
+    tableName: 'Tarjeta',
     timestamps: false,
     indexes: [
       {
@@ -35,14 +38,14 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "id_detalle" },
+          { name: "numero" },
         ]
       },
       {
-        name: "producto_detalle_venta_fk",
+        name: "usuario_tarjeta_fk",
         using: "BTREE",
         fields: [
-          { name: "id_producto" },
+          { name: "cedula" },
         ]
       },
     ]

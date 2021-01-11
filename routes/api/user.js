@@ -57,7 +57,6 @@ router.post('/producto',[
 
 router.post('/login', 
     [
-        
         check('cedula','Se necesita la cedula').isNumeric(),
         check('contrasenia_usuario','Se necesita la contraseña').isLength({ min: 6 }),
         validarCampos
@@ -88,7 +87,8 @@ router.post('/login',
                 lastname: usuario.apellido_usuario,
                 token,
                 number: usuario.multiplo,
-                operacion: usuario.operacion
+                operacion: usuario.operacion,
+                usuario
             })
 
         } catch (error) {
@@ -109,6 +109,15 @@ router.get('/renew', validatJWT , async (req,res)=>{
         id,
         name,
         token,
+    })
+});
+
+router.get('/getUser', async (req,res)=>{
+    const { id } = req.query;
+    const usuario = await User.findOne({ where: { cedula: id }});
+    return res.json({
+        ok:true,
+        usuario
     })
 });
 
