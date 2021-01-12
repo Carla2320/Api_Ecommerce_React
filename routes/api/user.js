@@ -69,16 +69,23 @@ router.post(
         });
       }
 
-      const token = await generarJWT(
-        usuario.cedula,
-        usuario.nombre_usuario,
-        usuario.operacion
-      );
+            res.json({
+                ok:true,
+                token,
+                usuario
+            })
+
+        } catch (error) {
+            res.status(500).json({
+                ok:false,
+                msg: 'habla con el administrador'
+            })
+        }
+});
 
       res.json({
         ok: true,
-        name: usuario.nombre_usuario,
-        lastname: usuario.apellido_usuario,
+        usuario,
         token,
         number: usuario.multiplo,
         operacion: usuario.operacion,
