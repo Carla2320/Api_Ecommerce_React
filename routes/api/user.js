@@ -16,7 +16,7 @@ router.get('/',async (req,res)=>{
 router.get('/visualizarP',async (req,res)=>{
     let films= await Product.findAll();
     res.json(films)
-})
+});
 router.post('/registrar',[
     check('cedula','La cedula es obligatoria').not().isEmpty(),
     check('id_rol','El id es obligatoria').not().isEmpty(),
