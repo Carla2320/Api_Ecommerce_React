@@ -92,13 +92,4 @@ router.get("/renew", validatJWT, async (req, res) => {
   });
 });
 
-router.get("/getUser", async (req, res) => {
-  const { id } = req.query;
-  const usuario = await User.findOne({ where: { cedula: id } });
-  return res.json({
-    ok: true,
-    usuario,
-  });
-});
-
 module.exports = router;
