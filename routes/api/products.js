@@ -8,6 +8,18 @@ router.get("/visualizarP", async (req, res) => {
   res.json(films);
 });
 
+router.get("/visualizarP/:id", async (req, res) => {
+  const id = req.params.id;
+  let films = await Product.findOne({ where: { id_producto: id } });
+  res.json(films);
+});
+
+router.get("/visualizarC/:id", async (req, res) => {
+  const id = req.params.id;
+  let films = await Product.findAll({ where: { id_categoria: id } });
+  res.json(films);
+});
+
 router.post(
   "/producto",
   [

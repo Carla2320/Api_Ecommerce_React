@@ -55,40 +55,20 @@ router.post(
       if (!usuario) {
         return res.status(400).json({
           ok: false,
-          msg: "No existe usuario con esa cedula",
-        });
-      }
-      const validPass = bcrypt.compareSync(
-        contrasenia_usuario,
-        usuario.contrasenia_usuario
-      );
-      if (!validPass) {
-        return res.status(400).json({
-          ok: false,
+
           msg: "Contraseña incorrecta",
         });
       }
 
-            res.json({
-                ok:true,
-                token,
-                usuario
-            })
-
-        } catch (error) {
-            res.status(500).json({
-                ok:false,
-                msg: 'habla con el administrador'
-            })
-        }
-});
+      const token = await generarJWT(
+        usuario.cedula,
+        usuario.nombre_usuario,
+        usuario.operacion
+      );
 
       res.json({
         ok: true,
-        usuario,
         token,
-        number: usuario.multiplo,
-        operacion: usuario.operacion,
         usuario,
       });
     } catch (error) {
@@ -107,8 +87,7 @@ router.get("/renew", validatJWT, async (req, res) => {
 
   res.json({
     ok: true,
-    id,
-    name,
+    usuario,
     token,
   });
 });
