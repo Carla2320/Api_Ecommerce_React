@@ -82,11 +82,7 @@ router.post('/login',
 
             res.json({
                 ok:true,
-                name: usuario.nombre_usuario,
-                lastname: usuario.apellido_usuario,
                 token,
-                number: usuario.multiplo,
-                operacion: usuario.operacion,
                 usuario
             })
 
@@ -105,18 +101,8 @@ router.get('/renew', validatJWT , async (req,res)=>{
 
     res.json({
         ok: true,
-        id,
-        name,
+        usuario,
         token,
-    })
-});
-
-router.get('/getUser', async (req,res)=>{
-    const { id } = req.query;
-    const usuario = await User.findOne({ where: { cedula: id }});
-    return res.json({
-        ok:true,
-        usuario
     })
 });
 
