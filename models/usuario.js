@@ -71,6 +71,10 @@ module.exports = function(sequelize, DataTypes) {
     multiplo: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    tarjeta: {
+      type: DataTypes.JSON,
+      allowNull: true
     }
   }, {
     sequelize,

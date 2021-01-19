@@ -4,16 +4,9 @@ const { validarCampos } = require("../../middlewares/validar-campos");
 const { validatJWT } = require("../../middlewares/validar-jwt");
 const { generarJWT } = require("../../helpers/jwt");
 const bcrypt = require("bcryptjs");
-
 const { User } = require("../../db");
 
-router.get("/", async (req, res) => {
-  let films = await User.findAll();
-  res.json(films);
-});
-
-router.post(
-  "/registrar",
+router.post("/registrar",
   [
     check("cedula", "La cedula es obligatoria").not().isEmpty(),
     check("id_rol", "El id es obligatoria").not().isEmpty(),
@@ -39,33 +32,25 @@ router.post(
   }
 );
 
-router.post(
-  "/login",
-  [
+router.post("/login",[
     check("cedula", "Se necesita la cedula").isNumeric(),
-    check("contrasenia_usuario", "Se necesita la contraseña").isLength({
-      min: 6,
-    }),
+    check("contrasenia_usuario", "Se necesita la contraseña").isLength({min: 6}),
     validarCampos,
-  ],
-  async (req, res) => {
+  ], async (req, res) => {
     const { cedula, contrasenia_usuario } = req.body;
     try {
       let usuario = await User.findOne({ where: { cedula: cedula } });
       if (!usuario) {
         return res.status(400).json({
           ok: false,
-
           msg: "Contraseña incorrecta",
         });
       }
-
       const token = await generarJWT(
         usuario.cedula,
         usuario.nombre_usuario,
         usuario.operacion
       );
-
       res.json({
         ok: true,
         token,
@@ -90,6 +75,28 @@ router.get("/renew", validatJWT, async (req, res) => {
     usuario,
     token,
   });
+});
+
+router.post("/addCard", async(req,res) => {
+    const { cedula, numero, tipo, date, cvs } = req.body;
+    try {
+      const userCard = await User.findOne({ where: { cedula: cedula } });
+      const old = userCard.tarjeta? userCard.tarjeta:JSON.parse('{}');
+      const numCard = Object.keys(old).length;
+      const newCardJson = `{"${numCard+1}": {"numero": ${numero},"tipo": "${tipo}","date": "${date}", "cvs": ${cvs}} }`;
+      const newCard = JSON.parse(newCardJson);
+      userCard.tarjeta = {...old, ...newCard };
+      await userCard.save();
+      res.json({
+          ok: true,
+          userCard
+      });
+    } catch (error) {
+      res.status(500).json({
+        ok: false,
+        msg: "Ha ocurrido un error, Contactate con soporte para mas información",
+      });
+    }
 });
 
 module.exports = router;
