@@ -3,6 +3,7 @@ const Sequelize = require("sequelize");
 const userModel = require("./models/usuario");
 const userModel1 = require("./models/Producto");
 const sesionModel = require("./models/sesion");
+const detalleModel= require("./models/Detalle_venta");
 
 const sequelize = new Sequelize("32AQQtdd59", "32AQQtdd59", "04EPivu5BU", {
   host: "remotemysql.com",
@@ -17,6 +18,7 @@ const sequelizeData = new Sequelize("y2waiC529E", "y2waiC529E", "U2ckMYvZ7N", {
 const User = userModel(sequelize, Sequelize);
 const Product = userModel1(sequelize, Sequelize);
 const Sesion = sesionModel(sequelizeData, Sequelize);
+const Detalle_venta = detalleModel(sequelize, Sequelize);
 
 sequelize.sync({ force: false }).then(() => {
   console.log("tablas sincronizadas");
@@ -30,4 +32,5 @@ module.exports = {
   User,
   Product,
   Sesion,
+  Detalle_venta,
 };

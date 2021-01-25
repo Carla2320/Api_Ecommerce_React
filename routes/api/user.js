@@ -13,8 +13,8 @@ router.post("/registrar",
     check("nombre_usuario", "La cedula es obligatoria").not().isEmpty(),
     check("apellido_usuario", "El  Apellido es obligatoria").not().isEmpty(),
     check("contrasenia_usuario", "La contraseña es obligatoria")
-      .not()
-      .isEmpty(),
+    .not()
+    .isEmpty(),
     check("operacion", "La operacion obligatoria").not().isEmpty(),
     check("multiplo", "El multiplo es obligatoria").not().isEmpty(),
   ],
