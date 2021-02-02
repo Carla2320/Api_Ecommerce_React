@@ -12,12 +12,12 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    hora_inicio: {
-      type: DataTypes.DATEONLY,
+    fecha_inicio: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
-    hora_fin: {
-      type: DataTypes.DATEONLY,
+    fecha_fin: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     transaccion: {
